@@ -206,8 +206,47 @@ public class BinarySearchTreeOfInteger {
         if (aux == null) {
             return false;
         }
-
+        remove(element);
+        count--;
         return true;
+    }
+
+    private void remove(Node n) {
+        //Remoção de folha
+        if (n.left == null && n.right == null) {
+
+            if (root == n) {
+                root = null;
+            } else {
+                Node pai = n.father;
+                if (pai.left == n) {
+                    pai.left = null;
+                } else {
+                    pai.right = null;
+                }
+            }
+
+        } else if(n.left == null && n.right != null) { // Remoção de nodo com um filho a direita
+
+            if (root == n) {
+                root = null;
+            } else {
+                Node pai = n.father;
+                if (pai.left == n) {
+                    pai.left = n.right;
+                } else {
+                    pai.right = n.right;
+                }
+            }
+
+        } else if (n.left != null && n.right == null) { // Remoção de nodo com um filho a esquerda
+
+        } else {
+            // remoção de nodo com dois filhos
+            Node s = smallest(n.right); // Verifica o menor do lado direito
+            n.element = s.element;
+            remove(s);
+        }
     }
  
     /** 
